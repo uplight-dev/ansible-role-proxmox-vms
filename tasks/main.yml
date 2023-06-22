@@ -50,6 +50,8 @@
                     default(proxmox_vms_defaults.distribution_kernel_path)} ) }}"
     distributions_initrd_path: "{{ distributions_initrd_path | default({}) | combine( {item.key: item.value.distribution_initrd_path |
                     default(proxmox_vms_defaults.distribution_initrd_path)} ) }}"
+    distributions_serial_port: "{{ distributions_serial_port | default({}) | combine( {item.key: item.value.distribution_serial_port |
+                    default(proxmox_vms_defaults.distribution_serial_port)} ) }}"
 
   with_items: "{{ query('dict', vms) }}"
 
@@ -73,7 +75,8 @@
     # template-file and remove all newlines (all commands in one line). See ansible filter documentation.
     args: "{{ lookup('template', 'deploy-args-'~nix_types[item.key]~'-'~distributions[item.key]~'.j2'
               if deploy_file_exists_list[item.key] else proxmox_vms_defaults.deploy_args_template) |
-              replace('\n', '') }}"
+              replace('\n', '') }} \
+              -serial tcp:127.0.0.1:{{ distributions_serial_port[item.key] }},server,nowait"
     cpu: "{{ item.value.cpu | default(proxmox_vms_defaults.cpu) }}"
     onboot: "{{ item.value.onboot | default(proxmox_vms_defaults.onboot) }}"
     validate_certs: false
