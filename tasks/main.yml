@@ -195,7 +195,7 @@
     name: "wag"
     state: current
   register: current_vm_state
-  until: current_vm_state.failed
+  until: current_vm_state.state == "stopped"
   retries: 360 #1 hour
   delay: 10
 
