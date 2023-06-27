@@ -171,7 +171,7 @@
 
 - meta: flush_handlers
 
-- name: Run ubuntu setup only once
+- name: Run installer only once by wiping out args
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -180,21 +180,6 @@
     name: "{{ item.item.key }}"
     delete: args
   with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
-
-- name: Wait for virtual machines to finish installation
-  proxmox_kvm:
-    api_user: "{{ proxmox.api_user }}"
-    api_password: "{{ proxmox.api_password }}"
-    api_host: "{{ proxmox.api_host }}"
-    node: "{{ item.item.value.node }}"
-    name: "{{ item.item.key }}"
-    state: current
-  with_items: "{{ created_vms_pve.results }}"
-  register: current_vm_state
-  until: current_vm_state.status == "stopped"
-  retries: 60
-  delay: 10
   when: item is changed
 
 - name: Restart vms
