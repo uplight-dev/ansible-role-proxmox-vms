@@ -181,7 +181,7 @@
     state: current
   with_items: "{{ created_vms_pve.results }}"
   register: current_vm_state
-  until: current_vm_state.failed == true
+  until: current_vm_state.failed | bool == true
   retries: 360 #1 hour
   delay: 10
   when: item is changed
