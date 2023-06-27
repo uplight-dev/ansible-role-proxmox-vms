@@ -186,7 +186,6 @@
 #   delay: 10
 #   when: item is changed
 
-
 - name: Wait for virtual machines to finish installation
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
@@ -199,57 +198,56 @@
   until: current_vm_state.failed
   retries: 360 #1 hour
   delay: 10
-  when: item is changed
 
-- name: Run installer only once by wiping out args
-  proxmox_kvm:
-    api_user: "{{ proxmox.api_user }}"
-    api_password: "{{ proxmox.api_password }}"
-    api_host: "{{ proxmox.api_host }}"
-    node: "{{ item.item.value.node }}"
-    name: "{{ item.item.key }}"
-    delete: args
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Run installer only once by wiping out args
+#   proxmox_kvm:
+#     api_user: "{{ proxmox.api_user }}"
+#     api_password: "{{ proxmox.api_password }}"
+#     api_host: "{{ proxmox.api_host }}"
+#     node: "{{ item.item.value.node }}"
+#     name: "{{ item.item.key }}"
+#     delete: args
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
 
-- name: Restart vms
-  proxmox_kvm:
-    api_user: "{{ proxmox.api_user }}"
-    api_password: "{{ proxmox.api_password }}"
-    api_host: "{{ proxmox.api_host }}"
-    node: "{{ item.item.value.node }}"
-    name: "{{ item.item.key }}"
-    state: started
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Restart vms
+#   proxmox_kvm:
+#     api_user: "{{ proxmox.api_user }}"
+#     api_password: "{{ proxmox.api_password }}"
+#     api_host: "{{ proxmox.api_host }}"
+#     node: "{{ item.item.value.node }}"
+#     name: "{{ item.item.key }}"
+#     state: started
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
 
-- name: Wait for virtual machines to finish rebooting
-  wait_for:
-    port: 22
-    host: "{{ item.item.value.network.ip }}"
-    search_regex: OpenSSH
-    delay: 10
-    timeout: 480
-    msg: Timeout or polling failed.
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Wait for virtual machines to finish rebooting
+#   wait_for:
+#     port: 22
+#     host: "{{ item.item.value.network.ip }}"
+#     search_regex: OpenSSH
+#     delay: 10
+#     timeout: 480
+#     msg: Timeout or polling failed.
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
 
-- name: Delete initrd
-  file:
-    state: absent
-    path: /tmp/{{ item.item.key }}-initrd.gz
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Delete initrd
+#   file:
+#     state: absent
+#     path: /tmp/{{ item.item.key }}-initrd.gz
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
 
-- name: Delete kernel
-  file:
-    state: absent
-    path: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}-kernel
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Delete kernel
+#   file:
+#     state: absent
+#     path: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}-kernel
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
 
-- name: Print success message
-  debug:
-    msg: "The installation of {{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }} on {{ item.item.key }} was successful!"
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Print success message
+#   debug:
+#     msg: "The installation of {{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }} on {{ item.item.key }} was successful!"
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
