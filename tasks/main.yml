@@ -183,7 +183,7 @@
     state: current
   # with_items: "{{ created_vms_pve.results }}"
   register: current_vm_state
-  until: current_vm_state.status == "stopped"
+  until: current_vm_state.status == "started"
   retries: 360 #1 hour
   delay: 10
   # when: item is changed
