@@ -204,7 +204,7 @@
     api_host: "{{ proxmox.api_host }}"
     node: "{{ item.item.value.node }}"
     name: "{{ item.item.key }}"
-    state: running
+    state: started
   with_items: "{{ created_vms_pve.results }}"
   when: item is changed
 
