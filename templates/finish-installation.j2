@@ -27,7 +27,8 @@ apt install --assume-yes openssh-client openssh-server {% if item.item.value.add
 
 {% if item.item.value.scripts is defined %}
     {% for script in item.item.value.scripts %}
-        {{ lookup('file', '../../../'+script, errors='warn') }}
+        {{ lookup('file', '../../../'+script) | 
+            default(lookup('file', script)) }}
     {% endfor %}
 {% endif %}
 
