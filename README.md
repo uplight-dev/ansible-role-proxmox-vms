@@ -1,3 +1,11 @@
+Uplight
+=========
+For our case, this helps to create the WAG Proxmox VM which contains the docker VMs:
+- wag
+- wag-proxy
+
+See http://wiki.x/vmbox%20setup/
+
 Ansible Role: Create virtual machines with Proxmox and install (unattended) Ubuntu distributions on them
 =========
 

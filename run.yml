@@ -1,0 +1,39 @@
+- hosts: vmhost
+  remote_user: root
+  gather_facts: false
+  pre_tasks:
+    - name: VMBOX - set SSH Port
+      set_fact:
+        ansible_port: "48622"
+  roles:
+    - role: /home/light/ansible-role-proxmox-vms/
+      vars:
+        proxmox:
+          api_user: root@pam
+          api_password: '>NB8Hx9A>jc"_$&q'
+          api_host: 10.1.2.2
+        vms:
+          wag:
+            node: vmbox
+            id: 100
+            nix_type: 'debian'
+            distribution: 'bullseye'
+            distribution_img: 'https://deb.debian.org/debian/dists/bullseye/main/installer-amd64/current/images/netboot/netboot.tar.gz'
+            distribution_kernel_path: '/debian-installer/amd64/linux'
+            distribution_initrd_path: '/debian-installer/amd64/initrd.gz'
+            locale: en_US
+            root_password: x
+            cores: 6
+            sockets: 2
+            balloon: 0
+            memory_size: 8192
+            virtio: '{"virtio0":"local:8192,cache=writeback,discard=on"}'
+            network:
+              ip: 10.1.2.3
+              netmask: 255.255.255.0
+              gateway: 10.1.2.2
+              nameserver: 185.12.64.1
+              domainname: wag.id
+            additional_packages:
+               - curl
+               - gnupg
