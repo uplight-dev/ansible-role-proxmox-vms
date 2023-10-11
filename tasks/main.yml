@@ -94,10 +94,7 @@
     path: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}
     state: directory
     mode: 0755
-  with_items: "{{ created_vms_pve.results }}
-  notify: sleep
-  register: created_vms_pve
-}"
+  with_items: "{{ created_vms_pve.results }}"
   when: item is changed
 
 - name: Download and unpack netboot image
