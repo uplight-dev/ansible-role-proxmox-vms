@@ -157,7 +157,7 @@
   with_items: "{{ created_vms_pve.results }}"
   when: item is changed
 
-- name: Start ubuntu setup
+- name: Start OS setup
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -182,7 +182,7 @@
   with_items: "{{ created_vms_pve.results }}"
   register: current_vm_state
   until: current_vm_state.status == "stopped"
-  retries: 360 #1 hour
+  retries: 180 #30 min
   delay: 10
   when: item is changed
 
