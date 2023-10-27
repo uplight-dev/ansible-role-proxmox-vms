@@ -14,8 +14,10 @@
  localechooser/translation/warn-light=true
  localechooser/translation/warn-severe=true
  netcfg/get_hostname={{ item.key }}
- passwd/root-password={{ item.value.root_password }}
- passwd/root-password-again={{ item.value.root_password }}
+ d-i passwd/root-password password {{ item.value.root_password }}
+ d-i passwd/root-password-again password {{ item.value.root_password }}
+ #passwd/root-password={{ item.value.root_password }}
+ #passwd/root-password-again={{ item.value.root_password }}
 {% if item.value.network is defined %}
 {% if item.value.network.domainname is defined %}
  netcfg/get_domain={{ item.value.network.domainname }}
