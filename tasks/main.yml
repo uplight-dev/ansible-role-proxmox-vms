@@ -130,7 +130,7 @@
 
 - name: Copy preseed file
   template:
-    src: "{{ 'files/'~nix_types[item.item.key]~'-'~distributions[item.item.key]~'.seed' if preseed_file_exists_list[item.item.key]
+    src: "{{ nix_types[item.item.key]~'-'~distributions[item.item.key]~'.seed.j2' if preseed_file_exists_list[item.item.key]
     else proxmox_vms_defaults.preseed_template }}"
     dest: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}/{{ item.item.key }}-initrd/preseed.cfg
   with_items: "{{ created_vms_pve.results }}"
