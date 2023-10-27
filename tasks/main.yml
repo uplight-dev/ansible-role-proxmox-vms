@@ -25,8 +25,8 @@
 
 - name: Check if preseed file exists
   stat:
-    path: "{{ role_path }}/files/{{ item.value.nix_type }}-{{ item.value.distribution |
-    default(proxmox_vms_defaults.distribution) }}.seed"
+    path: "{{ role_path }}/templates/{{ item.value.nix_type }}-{{ item.value.distribution |
+    default(proxmox_vms_defaults.distribution) }}.seed.j2"
   delegate_to: localhost
   become: false
   with_dict: "{{ vms }}"
