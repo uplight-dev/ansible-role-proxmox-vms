@@ -129,7 +129,7 @@
   when: item is changed
 
 - name: Copy preseed file
-  copy:
+  template:
     src: "{{ 'files/'~nix_types[item.item.key]~'-'~distributions[item.item.key]~'.seed' if preseed_file_exists_list[item.item.key]
     else proxmox_vms_defaults.preseed_template }}"
     dest: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}/{{ item.item.key }}-initrd/preseed.cfg
