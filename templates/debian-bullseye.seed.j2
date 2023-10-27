@@ -122,8 +122,8 @@ d-i passwd/make-user boolean false
 d-i user-setup/allow-password-weak                  boolean     true
 
 # Root password, either in clear text
-d-i passwd/root-password password {{item.item.root_password}}
-d-i passwd/root-password-again password {{item.item.root_password}}
+d-i passwd/root-password password {{item.item.value.root_password}}
+d-i passwd/root-password-again password {{item.item.value.root_password}}
 # or encrypted using a crypt(3)  hash.
 #d-i passwd/root-password-crypted password [crypt(3) hash]
 
