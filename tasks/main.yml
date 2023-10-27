@@ -150,12 +150,12 @@
   with_items: "{{ created_vms_pve.results }}"
   when: item is changed
 
-- name: Delete temporary directory
-  file:
-    state: absent
-    path: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+# - name: Delete temporary directory
+#   file:
+#     state: absent
+#     path: /tmp/{{ nix_types[item.item.key] }}-{{ distributions[item.item.key] }}
+#   with_items: "{{ created_vms_pve.results }}"
+#   when: item is changed
 
 - name: Start OS setup
   proxmox_kvm:
