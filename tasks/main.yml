@@ -202,11 +202,13 @@
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
     api_host: "{{ proxmox.api_host }}"
-    node: "{{ item.item.value.node }}"
-    name: "{{ item.item.key }}"
+    node: "vmbox"
+    name: "wag"
+    # node: "{{ item.item.value.node }}"
+    # name: "{{ item.item.key }}"
     state: started
-  with_items: "{{ created_vms_pve.results }}"
-  when: item is changed
+  # with_items: "{{ created_vms_pve.results }}"
+  # when: item is changed
 
 - name: Wait for virtual machines to finish rebooting
   wait_for:
