@@ -62,6 +62,7 @@
     api_host: "{{ proxmox.api_host }}"
     node: "{{ item.value.node }}"
     name: "{{ item.key }}"
+    vmid: "{{ item.value.id }}"
     net: "{{ item.value.net | default(proxmox_vms_defaults.net) }}"
     scsihw: "{{ item.value.scsihw | default(proxmox_vms_defaults.scsihw) }}"
     virtio: "{{ item.value.virtio | default(proxmox_vms_defaults.virtio) }}"
